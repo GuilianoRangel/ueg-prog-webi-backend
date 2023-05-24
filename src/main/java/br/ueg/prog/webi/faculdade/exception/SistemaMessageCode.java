@@ -8,6 +8,7 @@
  */
 package br.ueg.prog.webi.faculdade.exception;
 
+import br.ueg.prog.webi.api.exception.ApiMessageCode;
 import br.ueg.prog.webi.api.exception.MessageCode;
 
 /**
@@ -16,11 +17,6 @@ import br.ueg.prog.webi.api.exception.MessageCode;
  * @author UEG S/A.
  */
 public enum SistemaMessageCode implements MessageCode {
-
-	ERRO_INESPERADO("ME001", 500),
-	ERRO_REGISTRO_NAO_ENCONTRADO("ME002", 404),
-	ERRO_BD("ME003", 400),
-
 	ERRO_CAMPOS_OBRIGATORIOS("MSG-001", 400),
 	MSG_OPERACAO_REALIZADA_SUCESSO("MSG-002", 200);
 

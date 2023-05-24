@@ -1,11 +1,12 @@
 package br.ueg.prog.webi.faculdade.service.impl;
 
+import br.ueg.prog.webi.api.exception.ApiMessageCode;
 import br.ueg.prog.webi.api.exception.BusinessException;
+import br.ueg.prog.webi.api.util.ValidacoesComum;
 import br.ueg.prog.webi.faculdade.exception.SistemaMessageCode;
 import br.ueg.prog.webi.faculdade.model.Aluno;
 import br.ueg.prog.webi.faculdade.repository.AlunoRepository;
 import br.ueg.prog.webi.faculdade.service.AlunoService;
-import br.ueg.prog.webi.faculdade.utils.ValidacoesComum;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
@@ -108,7 +109,7 @@ public class AlunoServiceImpl implements AlunoService {
         Aluno alunoBD = alunoRepository
                 .findById(matricula)
                 .orElseThrow(
-                        () -> new BusinessException(SistemaMessageCode.ERRO_REGISTRO_NAO_ENCONTRADO)
+                        () -> new BusinessException(ApiMessageCode.ERRO_REGISTRO_NAO_ENCONTRADO)
                 );
         return alunoBD;
     }

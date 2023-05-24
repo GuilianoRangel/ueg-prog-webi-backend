@@ -12,18 +12,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 /**
  * Classe handler responsável por interceptar e tratar as exceções de forma
  * amigavel para o client.
+ * Para incluir novos tratamentos de exceção inclua sua exceção aqui nesse arquivo
  * 
- * @author Squadra Tecnologia
+ * @author Guiliano Rangel
  */
 @ControllerAdvice
 public class ResponseExceptionHandler extends ApiRestResponseExceptionHandler {
-
-	/**
-	 * @see ApiRestResponseExceptionHandler#getCodeInternalServerError()
-	 */
-	@Override
-	protected MessageCode getCodeInternalServerError() {
-		return SistemaMessageCode.ERRO_INESPERADO;
-	}
 
 }
