@@ -6,5 +6,6 @@ import br.ueg.prog.webi.faculdade.model.Tipo;
 public interface TipoService
         extends CrudService<Tipo, Long> {
     Tipo desativar(Long id);
+    Tipo ativar(Long id);
 
 }

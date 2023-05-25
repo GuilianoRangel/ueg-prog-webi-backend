@@ -26,8 +26,16 @@ public class TipoServiceImpl
 
     }
     public Tipo desativar(Long id){
+        return changeTipoStatus(id, StatusAtivoInativo.INATIVO);
+    }
+    public Tipo ativar(Long id){
+        StatusAtivoInativo status = StatusAtivoInativo.ATIVO;
+        return changeTipoStatus(id, status);
+    }
+
+    private Tipo changeTipoStatus(Long id, StatusAtivoInativo status) {
         Tipo tipo = this.recuperarEntidadeOuGeraErro(id);
-        tipo.setStatus(StatusAtivoInativo.INATIVO);
+        tipo.setStatus(status);
         tipo = this.repository.save(tipo);
         return tipo;
     }

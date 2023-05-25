@@ -5,15 +5,16 @@ import br.ueg.prog.webi.faculdade.model.enums.StatusAtivoInativo;
 import br.ueg.prog.webi.faculdade.repository.TipoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @Component
-public class AppStartupRunner {
+public class AppStartupRunner implements ApplicationRunner {
 
     public static final String NONE="none";
     public static final String CREATE_DROP="create-drop";
@@ -26,8 +27,10 @@ public class AppStartupRunner {
     private static final Logger LOG =
             LoggerFactory.getLogger(AppStartupRunner.class);
 
-    public AppStartupRunner(TipoRepository tipoRepository){
-        System.out.println("Executado");
+    @Autowired
+    private TipoRepository tipoRepository;
+
+    public void initDados(){
 
         Tipo t1 = new Tipo();
         t1.setNome("Tipo1");
@@ -40,5 +43,10 @@ public class AppStartupRunner {
         t1.setDataCriacao(LocalDate.now());
         t1.setStatus(StatusAtivoInativo.INATIVO);
         tipoRepository.save(t1);
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        this.initDados();
     }
 }
