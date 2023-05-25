@@ -2,7 +2,7 @@
  * ResponseExceptionHandler.java
  * Copyright (c) UEG.
  */
-package br.ueg.prog.webi.faculdade.exception;
+package br.ueg.aluno.aplicacao01.exception;
 
 import br.ueg.prog.webi.api.exception.ApiRestResponseExceptionHandler;
 import br.ueg.prog.webi.api.exception.MessageCode;
@@ -18,5 +18,4 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
  */
 @ControllerAdvice
 public class ResponseExceptionHandler extends ApiRestResponseExceptionHandler {
-
 }

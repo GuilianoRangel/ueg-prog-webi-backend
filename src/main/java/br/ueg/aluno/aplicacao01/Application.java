@@ -1,4 +1,4 @@
-package br.ueg.prog.webi.faculdade;
+package br.ueg.aluno.aplicacao01;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,13 +7,13 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 @SpringBootApplication(
 		scanBasePackages = {
-				"br.ueg.prog.webi.faculdade.*",
+				"br.ueg.aluno.aplicacao01.*",
 				//Para funcionamento da Arquitetura
-				"br.ueg.prog.webi.api.*", "br.ueg.prog.webi.*"}
+				"br.ueg.prog.webi.*"}
 )
 @EntityScan(basePackageClasses = { Jsr310JpaConverters.class },
 		basePackages = {
-		"br.ueg.prog.webi.faculdade.*",
+		"br.ueg.aluno.aplicacao01.*",
 		//Para funcionamento da Arquitetura
 		"br.ueg.prog.webi.api.*"}
 )

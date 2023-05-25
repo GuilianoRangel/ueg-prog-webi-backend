@@ -6,7 +6,7 @@
  *
  *
  */
-package br.ueg.prog.webi.faculdade.exception;
+package br.ueg.aluno.aplicacao01.exception;
 
 import br.ueg.prog.webi.api.exception.ApiMessageCode;
 import br.ueg.prog.webi.api.exception.MessageCode;

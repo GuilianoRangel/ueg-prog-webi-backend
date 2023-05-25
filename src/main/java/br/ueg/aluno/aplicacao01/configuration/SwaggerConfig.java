@@ -6,7 +6,7 @@
  *
  *
  */
-package br.ueg.prog.webi.faculdade.configuration;
+package br.ueg.aluno.aplicacao01.configuration;
 
 //import springfox.documentation.swagger2.annotations.EnableSwagger2;
 

@@ -6,7 +6,7 @@
  *
  *
  */
-package br.ueg.prog.webi.faculdade.configuration;
+package br.ueg.aluno.aplicacao01.configuration;
 
 import br.ueg.prog.webi.api.config.ApiWebConfig;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
