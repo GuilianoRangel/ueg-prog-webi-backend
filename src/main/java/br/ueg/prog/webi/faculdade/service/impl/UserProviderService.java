@@ -2,6 +2,7 @@ package br.ueg.prog.webi.faculdade.service.impl;
 
 import br.ueg.prog.webi.api.dto.CredencialDTO;
 import br.ueg.prog.webi.api.dto.UsuarioSenhaDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -18,6 +19,8 @@ public class UserProviderService implements br.ueg.prog.webi.api.service.UserPro
     }
 
     private static CredencialDTO getCredencialDTO() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String senhaCodificada = bCryptPasswordEncoder.encode("admin");
         return CredencialDTO.builder()
                 .login("admin")
                 .id(1L)
@@ -25,7 +28,7 @@ public class UserProviderService implements br.ueg.prog.webi.api.service.UserPro
                 .email("admin@admin.com.br")
                 .roles(Arrays.asList("ROLE_ADMIN"))
                 .statusAtivo(true)
-                .senha("admin")
+                .senha(senhaCodificada)
                 .build();
     }
 
