@@ -26,7 +26,7 @@ public class UserProviderService implements br.ueg.prog.webi.api.service.UserPro
                 .id(1L)
                 .nome("Admin")
                 .email("admin@admin.com.br")
-                .roles(Arrays.asList("ROLE_ADMIN"))
+                .roles(Arrays.asList("ROLE_ADMIN", "ROLE_TIPO_INCLUIR"))
                 .statusAtivo(true)
                 .senha(senhaCodificada)
                 .build();
