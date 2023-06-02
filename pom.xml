@@ -101,6 +101,12 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- https://medium.com/@ddwen/understanding-hot-deployment-and-hot-reloading-in-spring-boot-172c3a66d81a-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional> <!-- Can prevent passing devtools dependencies into other modules -->
+		</dependency>
 	</dependencies>
 
 	<build>
