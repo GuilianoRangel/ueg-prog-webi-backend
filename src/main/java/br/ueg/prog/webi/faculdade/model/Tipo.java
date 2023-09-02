@@ -1,9 +1,11 @@
 package br.ueg.prog.webi.faculdade.model;
 
 
+import br.ueg.prog.webi.api.model.BaseEntidade;
 import br.ueg.prog.webi.api.model.IEntidade;
-import br.ueg.prog.webi.faculdade.model.enums.StatusAtivoInativo;
-import br.ueg.prog.webi.faculdade.model.enums.converter.StatusAtivoInativoConverter;
+import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
+import br.ueg.prog.webi.adminmodule.model.enums.converter.StatusAtivoInativoConverter;
+import br.ueg.prog.webi.faculdade.model.pks.PkChave;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -23,7 +25,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
                 @UniqueConstraint(name= Tipo.UK_TIPO_NOME, columnNames = "nome" )
         }
 )
-public class Tipo implements IEntidade<Long> {
+public class Tipo extends BaseEntidade<Long> {
     public static final String UK_TIPO_NOME = "uk_tipo_nome";
     @SequenceGenerator(
             name="a_gerador_sequence",
@@ -47,22 +49,4 @@ public class Tipo implements IEntidade<Long> {
     @Convert(converter = StatusAtivoInativoConverter.class)
     @Column(name = "status_tipo", length = 1)
     private StatusAtivoInativo status;
-
-    @Override
-    public String getTabelaNome() {
-        return "Tipo";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Tipo tipo = (Tipo) o;
-        return id != null && Objects.equals(id, tipo.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

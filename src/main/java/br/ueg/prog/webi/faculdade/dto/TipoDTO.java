@@ -1,6 +1,6 @@
 package br.ueg.prog.webi.faculdade.dto;
 
-import br.ueg.prog.webi.faculdade.model.enums.StatusAtivoInativo;
+import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 

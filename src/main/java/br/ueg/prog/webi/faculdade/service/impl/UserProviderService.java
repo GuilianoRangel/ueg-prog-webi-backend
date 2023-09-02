@@ -1,7 +1,12 @@
 package br.ueg.prog.webi.faculdade.service.impl;
 
+import br.ueg.prog.webi.adminmodule.mapper.UsuarioMapper;
+import br.ueg.prog.webi.adminmodule.model.Usuario;
+import br.ueg.prog.webi.adminmodule.service.GrupoService;
+import br.ueg.prog.webi.adminmodule.service.UsuarioService;
 import br.ueg.prog.webi.api.dto.CredencialDTO;
 import br.ueg.prog.webi.api.dto.UsuarioSenhaDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +15,20 @@ import java.util.Objects;
 
 @Service
 public class UserProviderService implements br.ueg.prog.webi.api.service.UserProviderService {
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private GrupoService grupoService;
+
+    @Autowired
+    private UsuarioMapper usuarioMapper;
     @Override
     public CredencialDTO getCredentialByLogin(String username) {
-        if(Objects.nonNull(username) && username.equals("admin")){
-            return getCredencialDTO();
-        }
-        return null;
+        Usuario byLogin = this.usuarioService.getByLogin(username);
+        CredencialDTO credencialDTO = this.usuarioMapper.toCredentialDTO(byLogin);
+        credencialDTO.setRoles(grupoService.getRolesByUsuario(byLogin.getId()));
+        return credencialDTO;
     }
 
     private static CredencialDTO getCredencialDTO() {
@@ -35,13 +48,11 @@ public class UserProviderService implements br.ueg.prog.webi.api.service.UserPro
     @Override
     public CredencialDTO redefinirSenha(UsuarioSenhaDTO usuarioSenhaDTO) {
         return null;
+        //return usuarioMapper.toCredentialDTO(this.usuarioService.redefinirSenha(usuarioSenhaDTO));
     }
 
     @Override
     public CredencialDTO getCredentialByEmail(String email) {
-        if(Objects.nonNull(email) && email.equals("admin@admin.com.br")){
-            return getCredencialDTO();
-        }
-        return null;
+        return this.usuarioMapper.toCredentialDTO(this.usuarioService.findByLoginUsuario(email));
     }
 }

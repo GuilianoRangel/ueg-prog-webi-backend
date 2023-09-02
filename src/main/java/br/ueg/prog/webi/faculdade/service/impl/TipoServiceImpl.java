@@ -2,7 +2,7 @@ package br.ueg.prog.webi.faculdade.service.impl;
 
 import br.ueg.prog.webi.api.service.BaseCrudService;
 import br.ueg.prog.webi.faculdade.model.Tipo;
-import br.ueg.prog.webi.faculdade.model.enums.StatusAtivoInativo;
+import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
 import br.ueg.prog.webi.faculdade.repository.TipoRepository;
 import br.ueg.prog.webi.faculdade.service.TipoService;
 import org.springframework.stereotype.Service;
