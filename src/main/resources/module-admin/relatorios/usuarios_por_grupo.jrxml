@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2023-06-03T22:37:30 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="usuarios-por-grupo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a5dde516-a81c-4dfd-86c3-a9f7838ed9d9">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="id_grupo" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	tgu.id_grupo ,
+	tgu.nome as nome_grupo,
+	tu.id_usuario ,
+	tu.login ,
+	tu.nome as nome_usuario
+from tbl_usuario tu
+inner join tbl_usuario_grupo ug
+	on ug.id_usuario  = tu.id_usuario
+inner join tbl_grupo_usuario  tgu
+	on tgu.id_grupo  = ug.id_grupo
+where ( $P{id_grupo} is null or tgu.id_grupo =  $P{id_grupo})]]>
+	</queryString>
+	<field name="id_grupo" class="java.lang.Long"/>
+	<field name="nome_grupo" class="java.lang.String"/>
+	<field name="id_usuario" class="java.lang.Long"/>
+	<field name="login" class="java.lang.String"/>
+	<field name="nome_usuario" class="java.lang.String"/>
+	<variable name="codg_usuario1" class="java.lang.Integer" resetType="Group" resetGroup="grupo" calculation="Count">
+		<variableExpression><![CDATA[$F{id_usuario}]]></variableExpression>
+	</variable>
+	<group name="id_grupo_usuario">
+		<groupExpression><![CDATA[$F{id_grupo}]]></groupExpression>
+	</group>
+	<group name="grupo">
+		<groupExpression><![CDATA[$F{id_grupo}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement x="20" y="0" width="100" height="20" uuid="b64652e9-f7ef-4806-a6e9-6fa83dd99d34"/>
+					<textFieldExpression><![CDATA[$F{id_grupo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="160" y="0" width="395" height="20" uuid="bc7b531f-c3c6-48bc-9856-f6b779421011"/>
+					<textFieldExpression><![CDATA[$F{nome_grupo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="100" height="20" uuid="9e63ff01-f559-4cc9-bff2-e2c125fb953d"/>
+					<text><![CDATA[código do usuário]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="20" width="100" height="20" uuid="2060dae5-5852-4419-a0c7-d85c9d5ba6cd"/>
+					<text><![CDATA[LOGIN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="200" y="20" width="354" height="20" uuid="331942eb-7f0e-442a-80fe-1c8827f6e83f"/>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<textField>
+					<reportElement x="200" y="0" width="100" height="20" uuid="93c60376-92bd-453e-8d34-176f4fe43060"/>
+					<textFieldExpression><![CDATA[$V{codg_usuario1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="30" uuid="d3f293f5-1c66-4497-99b3-68dd90b9ddb8"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Usuários por Grupo.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="73a8dcd6-aa2b-48ea-8f2b-80759d4b78ba"/>
+				<textFieldExpression><![CDATA[$F{id_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="6624e7d8-72c9-4a20-b697-1901f2caadcf"/>
+				<textFieldExpression><![CDATA[$F{login}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="354" height="20" uuid="6be48161-65b0-430e-9714-a3e90efb6998"/>
+				<textFieldExpression><![CDATA[$F{nome_usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="100" height="30" uuid="873fc791-5c21-417e-97b7-8615133704af"/>
+				<text><![CDATA[Data Geração]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="450" y="0" width="100" height="30" uuid="fa984277-17cb-4f97-b265-75adb6f1a8e5"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="120" y="10" width="100" height="30" uuid="7b5fa9b2-4d57-4b6c-9d1d-763816a54f55"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

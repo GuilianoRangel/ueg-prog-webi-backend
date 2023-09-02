@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2023-06-03T22:00:53 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="usuarios_por_grupo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71c478f7-7a4e-46f5-9ff6-3d3ce34049dd">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="localhost"/>
+	<queryString>
+		<![CDATA[select 
+	tgu.id_grupo, 
+	tgu.nome , 
+	count(ug.id_usuario ) as totalUsuarios 
+from tbl_grupo_usuario tgu 
+left join tbl_usuario_grupo ug
+	on ug.id_grupo  = tgu.id_grupo
+group by tgu.id_grupo , tgu.nome 
+order by tgu.nome]]>
+	</queryString>
+	<field name="id_grupo" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="totalusuarios" class="java.lang.Long"/>
+	<variable name="totalusuarios1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalusuarios}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="30" uuid="7d555315-1040-4435-a0af-8edc18154fcd"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Usuários por Grupo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="170" height="20" uuid="94734328-29d1-4b56-9333-211f8141a2ad"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nome Grupo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="0" width="170" height="20" uuid="1d4dc87d-15e9-4d20-9573-eaca3ba7efaf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[total]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="170" height="20" uuid="68999a2b-1911-4937-9a0f-abe10342987d"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="100" height="20" uuid="c40c0291-f135-4b28-a160-6acd997307f1"/>
+				<textFieldExpression><![CDATA[$F{totalusuarios}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="62" splitType="Stretch">
+			<textField>
+				<reportElement x="330" y="0" width="100" height="22" uuid="99f5f4ec-b9db-4ed4-8a2b-589cb467b047"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{totalusuarios1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="0" width="70" height="22" uuid="54391ae5-2b36-4ee0-ba3c-fca7940d18d5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
