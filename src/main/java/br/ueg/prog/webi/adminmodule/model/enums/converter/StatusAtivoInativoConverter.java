@@ -2,10 +2,10 @@
  * StatusAtivoInativoConverter.java
  * Copyright (c) UEG.
  */
-package br.ueg.prog.webi.faculdade.model.enums.converter;
+package br.ueg.prog.webi.adminmodule.model.enums.converter;
 
 
-import br.ueg.prog.webi.faculdade.model.enums.StatusAtivoInativo;
+import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

@@ -6,7 +6,7 @@
  *
  *
  */
-package br.ueg.prog.webi.faculdade.model.enums;
+package br.ueg.prog.webi.adminmodule.model.enums;
 
 import java.util.Arrays;
 

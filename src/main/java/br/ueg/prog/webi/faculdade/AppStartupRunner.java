@@ -1,8 +1,9 @@
 package br.ueg.prog.webi.faculdade;
 
-import br.ueg.prog.webi.faculdade.model.Tipo;
-import br.ueg.prog.webi.faculdade.model.enums.StatusAtivoInativo;
-import br.ueg.prog.webi.faculdade.repository.TipoRepository;
+import br.ueg.prog.webi.adminmodule.service.InicializarService;
+import br.ueg.prog.webi.faculdade.model.*;
+import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
+import br.ueg.prog.webi.faculdade.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class AppStartupRunner implements ApplicationRunner {
     @Autowired
     private TipoRepository tipoRepository;
 
+
+    @Autowired
+    private InicializarService inicializarService;
     public void initDados(){
 
         Tipo t1 = new Tipo();
@@ -48,5 +52,6 @@ public class AppStartupRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         this.initDados();
+        this.inicializarService.inicializar();
     }
 }
