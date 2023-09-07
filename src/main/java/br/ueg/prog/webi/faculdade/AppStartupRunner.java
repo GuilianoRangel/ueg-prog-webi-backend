@@ -4,6 +4,7 @@ import br.ueg.prog.webi.adminmodule.service.InicializarService;
 import br.ueg.prog.webi.faculdade.model.*;
 import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
 import br.ueg.prog.webi.faculdade.repository.*;
+import br.ueg.prog.webi.faculdade.service.InicializarShareKeysService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,10 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Autowired
     private InicializarService inicializarService;
+
+    @Autowired
+    private InicializarShareKeysService inicializarShareKeysService;
+
     public void initDados(){
 
         Tipo t1 = new Tipo();
@@ -51,7 +56,12 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        this.initDados();
-        this.inicializarService.inicializar();
+        try {
+            this.initDados();
+            this.inicializarService.inicializar();
+            this.inicializarShareKeysService.inicializar();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

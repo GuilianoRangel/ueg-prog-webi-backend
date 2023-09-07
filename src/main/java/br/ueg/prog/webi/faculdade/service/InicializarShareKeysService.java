@@ -1,5 +1,7 @@
 package br.ueg.prog.webi.faculdade.service;
 
+import br.ueg.prog.webi.faculdade.dto.LocalDTO;
+import br.ueg.prog.webi.faculdade.mapper.LocalMapper;
 import br.ueg.prog.webi.faculdade.model.*;
 import br.ueg.prog.webi.faculdade.model.pks.PkPessoaPermissao;
 import br.ueg.prog.webi.faculdade.model.pks.PkResponsabilidade;
@@ -43,6 +45,12 @@ public class InicializarShareKeysService {
 
     @Autowired
     private EmprestimoRepository emprestimoRepository;
+
+    @Autowired
+    private ResponsabilidadeService responsabilidadeService;
+
+    @Autowired
+    private LocalMapper localMapper;
 
     public void inicializar(){
         LOG.info("initiateKeyShareInstance samples");
@@ -99,12 +107,15 @@ public class InicializarShareKeysService {
         ch.setNumero(100L);
         ch.setQrCode("L10C100");
 
-        ch = chaveRepository.save(ch);
+        /*ch = chaveRepository.save(ch);
         System.out.println(ch);
         System.out.println(ch.getId());
 
         Optional<Chave> ch2 = chaveRepository.findById(ch.getId());
-        System.out.println(ch2.orElseGet(() -> new Chave()));
+        System.out.println(ch2.orElseGet(() -> new Chave()));*/
+
+        l.getChaves().add(ch);
+        l= localRepository.save(l);
 
         Responsabilidade r = new Responsabilidade();
         r.setLocal(l);
@@ -137,7 +148,7 @@ public class InicializarShareKeysService {
             System.out.println(pp2.get().getIdFromHash(idHash));
 
             Emprestimo emp = new Emprestimo();
-            emp.setChave(ch2.orElseGet(() -> new Chave()));
+            emp.setChave(ch);
             emp.setPessoaPermissao(pp2.get());
             emp.setDataHoraRetirada(LocalDateTime.now(ZoneId.systemDefault()));
 
@@ -145,7 +156,58 @@ public class InicializarShareKeysService {
             System.out.println(emp);
         }
 
+        /* teste service Resposabilidade */
+        Local loc = new Local();
+        loc.setNumeroSala(10L);
 
+        Funcionario func = new Funcionario();
+        func.setCpf(123L);
+
+        Responsabilidade resp = new Responsabilidade();
+        resp.setLocal(loc);
+        resp.setFuncionario(func);
+        resp.setDataInicio(LocalDate.now(ZoneId.systemDefault()));
+
+        Responsabilidade respInc = responsabilidadeService.incluir(resp);
+        System.out.println(respInc);
+        String pkResp = respInc.getIdHash();
+        Long seq = respInc.getSequencia();
+        LocalDate inicio = respInc.getDataInicio();
+
+        resp = new Responsabilidade();
+        resp.setLocal(
+                Local.builder()
+                        .numeroSala(10L)
+                        .build());
+        resp.setFuncionario(
+                Funcionario.builder()
+                        .cpf(123L)
+                        .build()
+        );
+        resp.setSequencia(seq);
+        resp.setDataInicio(inicio);
+        resp.setDataFim(LocalDate.now().plusDays(90));
+        respInc = responsabilidadeService.alterar(resp, respInc.getIdFromHash(pkResp));
+        System.out.println(respInc);
+
+        // teste do Local salvando com chave.
+        //l = localRepository.getReferenceById(10l);
+        Optional<Local> byId = localRepository.findById(10L);
+        l = byId.orElseGet(() -> Local.builder().build());
+        System.out.println(l);
+        l.getChaves().add(Chave.builder().local(l).numero(20L).qrCode("20L").build());
+        l.getChaves().add(Chave.builder().local(l).numero(30L).qrCode("30L").build());
+        l = localRepository.save(l);
+        System.out.println(l);
+
+        byId = localRepository.findById(10L);
+        System.out.println(byId.orElseGet(() -> Local.builder().build()));
+
+        LocalDTO localDTO = localMapper.toDTO(l);
+        System.out.println(localDTO);
+
+        Local lTeste = localMapper.toModelo(localDTO);
+        System.out.println(lTeste);
     }
 
 }

@@ -1,25 +1,26 @@
 package br.ueg.prog.webi.faculdade.model;
 
 import br.ueg.prog.webi.api.model.BaseEntidade;
-import lombok.Data;
-
 import jakarta.persistence.*;
+import lombok.*;
+import org.apache.commons.lang3.builder.HashCodeExclude;
+import org.apache.commons.lang3.builder.ToStringExclude;
+import org.hibernate.Hibernate;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Table(name = "TBL_LOCAL")
 @Entity
-public @Data
+@Builder
+@AllArgsConstructor
+@ToString
+public @Getter
+@Setter
+@RequiredArgsConstructor
 class Local extends BaseEntidade<Long> {
     @Id
-    @SequenceGenerator(
-            name = "local_sequence",
-            sequenceName = "seq_local",
-            allocationSize = 1,
-            initialValue = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "local_sequence"
-    )
     @Column(name = "numero_sala")
     private Long numeroSala;
 
@@ -29,4 +30,23 @@ class Local extends BaseEntidade<Long> {
     @Column(name = "descricao",	length = 50)
     private String descricao;
 
+    //TODO mostrar mapeamento bidirecional
+    @OneToMany(mappedBy = "local", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<Chave> chaves = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Local local = (Local) o;
+        return  Objects.equals(getNumeroSala(), local.getNumeroSala()) &&
+                Objects.equals(getNome(), local.getNome()) &&
+                Objects.equals(getDescricao(), local.getDescricao());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumeroSala(), getNome(), getDescricao());
+    }
 }
