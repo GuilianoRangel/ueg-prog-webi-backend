@@ -31,7 +31,7 @@ public class TipoController extends CrudController
                             schema = @Schema(implementation = TipoDTO.class) ))
     })
     @PreAuthorize(value = "hasRole('ADMIN')")
-    public ResponseEntity<TipoDTO> desativar(@PathVariable(name = "id") long id){
+    public ResponseEntity<TipoDTO> desativarTipo(@PathVariable(name = "id") long id){
         Tipo tipo = this.service.desativar(id);
         return ResponseEntity.ok(this.mapper.toDTO(tipo));
     }
@@ -43,7 +43,7 @@ public class TipoController extends CrudController
                             schema = @Schema(implementation = TipoDTO.class) ))
     })
     @PreAuthorize(value = "hasRole('SECRETARIA')")
-    public ResponseEntity<TipoDTO> ativar(@PathVariable(name = "id") long id){
+    public ResponseEntity<TipoDTO> ativarTipo(@PathVariable(name = "id") long id){
         Tipo tipo = this.service.desativar(id);
         return ResponseEntity.ok(this.mapper.toDTO(tipo));
     }

@@ -94,7 +94,7 @@ public class GrupoController extends ModuleAdminAbstractController {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = MessageResponse.class)))
     })
-    public ResponseEntity<?> incluir(
+    public ResponseEntity<?> incluirGrupo(
             @Parameter(description = "Informações de Grupo", required = true)
                 @Valid @RequestBody GrupoDTO grupoDTO
     ) {
@@ -125,7 +125,7 @@ public class GrupoController extends ModuleAdminAbstractController {
                             schema = @Schema(implementation = MessageResponse.class)))
     })
     @PutMapping(path = "/{id:[\\d]+}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> alterar(
+    public ResponseEntity<?> alterarGrupo(
             @Parameter(description = "Código do Sistema", required = true)
                 @PathVariable final BigDecimal id,
             @Parameter(description = "Informações de Grupo", required = true)
@@ -159,7 +159,7 @@ public class GrupoController extends ModuleAdminAbstractController {
                             schema = @Schema(implementation = MessageResponse.class)))
     })
     @RequestMapping(method = RequestMethod.GET, path = "/{id:[\\d]+}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getById(
+    public ResponseEntity<?> getGrupoById(
             @Parameter(description = "Código do Grupo", required = true)
             @PathVariable final BigDecimal id) {
         Grupo grupo = grupoService.getGrupoByIdFetch(id.longValue());
@@ -190,7 +190,7 @@ public class GrupoController extends ModuleAdminAbstractController {
                             schema = @Schema(implementation = MessageResponse.class)))
     })
     @GetMapping(path = "/filtro", produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<?> getAllByFiltro(
+    public ResponseEntity<?> getAllGrupoByFiltro(
             @Parameter(description = "Filtro de pesquisa", required = true) @ModelAttribute final FiltroGrupoDTO filtroGrupoDTO) {
         List<GrupoDTO> gruposDTO = new ArrayList<>();
         List<Grupo> grupos = grupoService.getGruposByFiltro(filtroGrupoDTO);
@@ -227,7 +227,7 @@ public class GrupoController extends ModuleAdminAbstractController {
                             schema = @Schema(implementation = MessageResponse.class)))
     })
 	@GetMapping(path = "/grupo/ativos", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> getAtivos() {
+	public ResponseEntity<?> getGruposAtivos() {
 		List<Grupo> grupos = grupoService.getAtivos();
 		List<GrupoDTO> gruposDTO = new ArrayList<>();
 		for (Grupo grupo : grupos) {
@@ -293,7 +293,7 @@ public class GrupoController extends ModuleAdminAbstractController {
                             schema = @Schema(implementation = MessageResponse.class)))
     })
     @PutMapping(path = "/{id:[\\d]+}/inativo", produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<?> inativar(@Parameter(description = "Id do Grupo", required = true) @PathVariable final BigDecimal id) {
+    public ResponseEntity<?> inativarGrupo(@Parameter(description = "Id do Grupo", required = true) @PathVariable final BigDecimal id) {
         grupoService.inativar(id.longValue());
         return ResponseEntity.ok().build();
     }
@@ -319,7 +319,7 @@ public class GrupoController extends ModuleAdminAbstractController {
                             schema = @Schema(implementation = MessageResponse.class)))
     })
     @PutMapping(path = "/{id:[\\d]+}/ativo", produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<?> ativar(@Parameter(description = "Id do Grupo", required = true) @PathVariable final BigDecimal id) {
+    public ResponseEntity<?> ativarGrupo(@Parameter(description = "Id do Grupo", required = true) @PathVariable final BigDecimal id) {
         grupoService.ativar(id.longValue());
         return ResponseEntity.ok().build();
     }

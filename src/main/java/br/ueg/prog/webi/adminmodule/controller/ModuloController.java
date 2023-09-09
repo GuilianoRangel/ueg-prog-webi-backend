@@ -67,7 +67,7 @@ public class ModuloController extends ModuleAdminAbstractController {
 							schema = @Schema(implementation = MessageResponse.class)))
 	})
 	@GetMapping(path = "/modulo/ativos", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> getAtivos() {
+	public ResponseEntity<?> getModulosAtivos() {
 		List<ModuloSistema> modulos = moduloSistemaService.getAtivos();
 		List<ModuloSistemaDTO> modulosDTO = new ArrayList<>();
 		for(ModuloSistema modulo: modulos){

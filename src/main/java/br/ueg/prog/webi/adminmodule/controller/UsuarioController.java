@@ -12,7 +12,6 @@ import br.ueg.prog.webi.adminmodule.dto.filtros.FiltroUsuarioDTO;
 import br.ueg.prog.webi.adminmodule.dto.model.UsuarioDTO;
 import br.ueg.prog.webi.adminmodule.mapper.UsuarioMapper;
 import br.ueg.prog.webi.adminmodule.model.Usuario;
-import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
 import br.ueg.prog.webi.adminmodule.service.UsuarioService;
 import br.ueg.prog.webi.api.exception.MessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -73,7 +72,7 @@ public class UsuarioController extends ModuleAdminAbstractController {
 							schema = @Schema(implementation = MessageResponse.class)))
 	})
 	@PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> incluir(
+	public ResponseEntity<?> incluirUsuario(
 			@Parameter(description = "Informações do Usuário", required = true)
 				@Valid @RequestBody UsuarioDTO usuarioDTO
 	) {
@@ -107,7 +106,7 @@ public class UsuarioController extends ModuleAdminAbstractController {
 							schema = @Schema(implementation = MessageResponse.class)))
 	})
     @PutMapping(path = "/{id:[\\d]+}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> alterar(
+    public ResponseEntity<?> alterarUsuario(
 			@Parameter(description = "Código do Usuário", required = true)
 				@PathVariable final BigDecimal id,
 			@Parameter(description = "Informações do Usuário", required = true)
@@ -250,7 +249,7 @@ public class UsuarioController extends ModuleAdminAbstractController {
 							schema = @Schema(implementation = MessageResponse.class)))
 	})
 	@PutMapping(path = "/{id:[\\d]+}/inativo", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> inativar(
+	public ResponseEntity<?> inativarUsuario(
 			@Parameter(description = "Código do Usuário", required = true)
 				@PathVariable final BigDecimal id
 	) {
@@ -279,7 +278,7 @@ public class UsuarioController extends ModuleAdminAbstractController {
 							schema = @Schema(implementation = MessageResponse.class)))
 	})
 	@PutMapping(path = "/{id:[\\d]+}/ativo", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> ativar(
+	public ResponseEntity<?> ativarUsuario(
 			@Parameter(description = "Código do Usuário", required = true)
 			@PathVariable final BigDecimal id
 	) {
@@ -397,7 +396,7 @@ public class UsuarioController extends ModuleAdminAbstractController {
 							schema = @Schema(implementation = MessageResponse.class)))
 	})
 	@GetMapping(path = "/inicializar/{senha}")
-	public ResponseEntity<?> inicializar(
+	public ResponseEntity<?> inicializarDadosAdministrativos(
 			@Parameter(description = "senha") @PathVariable final String senha) {
 		usuarioService.inicializar(senha);
 		return ResponseEntity.ok().build();
