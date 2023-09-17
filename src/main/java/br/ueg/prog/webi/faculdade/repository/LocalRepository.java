@@ -14,7 +14,7 @@ public interface LocalRepository
         extends JpaRepository<Local, Long>{
     @Query("select l " +
             "From Local l " +
-            "inner join fetch l.chaves " +
+            "left join fetch l.chaves " +
             " where l.numeroSala = :pk " )
     Optional<Local> findById(Long pk);
 }

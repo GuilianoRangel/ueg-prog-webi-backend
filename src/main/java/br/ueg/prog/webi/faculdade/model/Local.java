@@ -27,7 +27,7 @@ class Local extends BaseEntidade<Long> {
     @Column(name = "nome", nullable = false,	length = 20)
     private String nome;
 
-    @Column(name = "descricao",	length = 50)
+    @Column(name = "descricao",	length = 100)
     private String descricao;
 
     //TODO mostrar mapeamento bidirecional

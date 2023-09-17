@@ -18,7 +18,11 @@ import br.ueg.prog.webi.api.exception.MessageCode;
  */
 public enum SistemaMessageCode implements MessageCode {
 	ERRO_CAMPOS_OBRIGATORIOS("MSG-001", 400),
-	MSG_OPERACAO_REALIZADA_SUCESSO("MSG-002", 200);
+	MSG_OPERACAO_REALIZADA_SUCESSO("MSG-002", 200),
+	MSG_CHAVE_JA_UTILIZADA("MSG-003", 400),
+	MSG_CHAVE_JA_EXISTE("MSG-004", 400),
+	MSG_LOCAL_JA_EXISTE("MSG-005", 400);
+	;
 
 	private final String code;
 

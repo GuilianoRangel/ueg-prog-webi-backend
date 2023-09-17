@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,4 +30,6 @@ public interface EmprestimoRepository
             " and r.sequencia = :#{#pk.pessoaPermissa.responsabilidade.sequencia} " +
             "")
     Optional<Emprestimo> findById(PkEmprestimo pk);
+
+    Optional<List<Emprestimo>> findByChave_NumeroAndChave_Local_Id(Long chaveNumero, Long chaveLocalId);
 }
