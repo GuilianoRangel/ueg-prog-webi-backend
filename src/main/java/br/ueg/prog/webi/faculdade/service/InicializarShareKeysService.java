@@ -52,11 +52,18 @@ public class InicializarShareKeysService {
     @Autowired
     private LocalMapper localMapper;
 
+    @Autowired
+    private FuncionarioService funcionarioService;
+
+    @Autowired
+    private CargoRepository cargoRepository;
+
     public void inicializar(){
         LOG.info("initiateKeyShareInstance samples");
         Cargo c = Cargo.builder()
                 .nome("Professor")
                 .build();
+        c = cargoRepository.saveAndFlush(c);
 
         Pessoa p = Pessoa.builder()
                 .cpf(123L)
@@ -69,7 +76,8 @@ public class InicializarShareKeysService {
         f.setPessoa(p);
         f.setCargo(c);
         f.setAlocacao("Alocação");
-        f = funcionarioRepository.save(f);
+        f.setNew();
+        f = funcionarioRepository.saveAndFlush(f);
         System.out.println(f);
 
         Optional<Funcionario> f2 = funcionarioRepository.findByCPF(123L);
@@ -85,7 +93,7 @@ public class InicializarShareKeysService {
                 .build());
         d.setAnoIngresso("2023");
         d.setCurso("SI");
-        d = discenteRepository.save(d);
+        d = discenteRepository.saveAndFlush(d);
         System.out.println(d);
 
         Optional<Discente> d2 = discenteRepository.findByCPF(123L);
@@ -99,7 +107,7 @@ public class InicializarShareKeysService {
         l.setDescricao("Laboratório IV - Informática");
         l.setNumeroSala(10L);
 
-        l = localRepository.save(l);
+        l = localRepository.saveAndFlush(l);
         System.out.println(l);
 
         Chave ch = new Chave();
@@ -115,14 +123,14 @@ public class InicializarShareKeysService {
         System.out.println(ch2.orElseGet(() -> new Chave()));*/
 
         l.getChaves().add(ch);
-        l= localRepository.save(l);
+        l= localRepository.saveAndFlush(l);
 
         Responsabilidade r = new Responsabilidade();
         r.setLocal(l);
         r.setFuncionario(f);
         r.setDataInicio(LocalDate.now(ZoneId.systemDefault()));
 
-        r = responsabilidadeRepository.save(r);
+        r = responsabilidadeRepository.saveAndFlush(r);
         PkResponsabilidade id = r.getId();
         System.out.println(id);
         Optional<Responsabilidade> r2 = responsabilidadeRepository.findById(id);
@@ -135,7 +143,7 @@ public class InicializarShareKeysService {
         pp.setPessoa(p);
         pp.setDataInicio(LocalDate.now(ZoneId.systemDefault()));
         pp.setDataFim(pp.getDataInicio().plusDays(180));
-        pp = pessoaPermissaoRepository.save(pp);
+        pp = pessoaPermissaoRepository.saveAndFlush(pp);
         System.out.println(pp);
         PkPessoaPermissao ppid = pp.getId();
 
@@ -152,7 +160,7 @@ public class InicializarShareKeysService {
             emp.setPessoaPermissao(pp2.get());
             emp.setDataHoraRetirada(LocalDateTime.now(ZoneId.systemDefault()));
 
-            emp = emprestimoRepository.save(emp);
+            emp = emprestimoRepository.saveAndFlush(emp);
             System.out.println(emp);
         }
 
@@ -197,7 +205,7 @@ public class InicializarShareKeysService {
         System.out.println(l);
         l.getChaves().add(Chave.builder().local(l).numero(20L).qrCode("20L").build());
         l.getChaves().add(Chave.builder().local(l).numero(30L).qrCode("30L").build());
-        l = localRepository.save(l);
+        l = localRepository.saveAndFlush(l);
         System.out.println(l);
 
         byId = localRepository.findById(10L);
@@ -208,6 +216,22 @@ public class InicializarShareKeysService {
 
         Local lTeste = localMapper.toModelo(localDTO);
         System.out.println(lTeste);
+
+        Funcionario f4 = new Funcionario();
+        f4.setCpf(125L);
+        f4.getPessoa().setNome("Funcionário 125");
+        f4.getPessoa().setTelefone("444");
+        f4.setAlocacao("Alocação");
+        f4.setCargo(f.getCargo());
+        //f3.setPessoa(Pessoa.builder().cpf(125L).build());
+        f4 = funcionarioService.incluir(f4);
+        System.out.println(f4);
+
+       f4.setAlocacao("OutraTeste");
+        //f3.setPessoa(Pessoa.builder().cpf(125L).build());
+        f4 = funcionarioService.incluir(f4);
+        System.out.println(f4);
+
     }
 
 }

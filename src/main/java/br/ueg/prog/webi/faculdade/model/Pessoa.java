@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Persistable;
 
 
 @Entity
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Table(name = "TBL_PESSOA")
-public @Data class Pessoa extends BaseEntidade<Long> {
+public @Data class Pessoa extends BaseEntidade<Long> implements Persistable<Long> {
     @Id
     @Column(name = "cpf", updatable = false, nullable = false)
     private Long cpf;
@@ -28,4 +29,13 @@ public @Data class Pessoa extends BaseEntidade<Long> {
     @Column(name = "email", length = 255)
     private String email;
 
+    @Transient
+    private boolean isNew = false;
+    public void setNew(){
+        this.isNew = true;
+    }
+    @Override
+    public boolean isNew() {
+        return this.isNew;
+    }
 }

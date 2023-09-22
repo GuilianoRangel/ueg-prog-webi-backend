@@ -28,3 +28,6 @@ https://medium.com/@pablodalloglio/7-reasons-not-to-use-composite-keys-1d5efd5ec
 https://stackoverflow.com/questions/23801575/customizing-hateoas-link-generation-for-entities-with-composite-ids
 https://stackoverflow.com/questions/31050812/spring-data-rest-and-idclass-not-compatible
 https://github.com/spring-projects/spring-data-rest/issues/972
+
+#Casos de entidades com chave primaria não auto incremento:
+https://github.com/spring-projects/spring-data-r2dbc/issues/49
