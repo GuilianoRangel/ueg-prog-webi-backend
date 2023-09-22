@@ -51,9 +51,9 @@ public class FuncionarioServiceImpl  extends BaseCrudService<Funcionario, Long, 
             funcionario.setPessoa(pessoa);
         }else{
             //Alterar os daods da pessoa retornado
-            funcionario.getPessoa().setNome(pessoaOld.getNome());
-            funcionario.getPessoa().setTelefone(pessoaOld.getTelefone());
-            funcionario.getPessoa().setEmail(pessoaOld.getEmail());
+            if(Objects.nonNull(pessoaOld.getNome())) { funcionario.getPessoa().setNome(pessoaOld.getNome()); }
+            if(Objects.nonNull(pessoaOld.getTelefone())) { funcionario.getPessoa().setTelefone(pessoaOld.getTelefone()); }
+            if(Objects.nonNull(pessoaOld.getEmail())) { funcionario.getPessoa().setEmail(pessoaOld.getEmail()); }
         }
     }
 
