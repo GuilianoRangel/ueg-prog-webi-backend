@@ -35,6 +35,10 @@ class Local extends BaseEntidade<Long> {
     @Builder.Default
     private Set<Chave> chaves = new HashSet<>();
 
+    @OneToMany(mappedBy = "local", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<Responsabilidade> responsaveis = new HashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

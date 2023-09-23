@@ -36,4 +36,9 @@ public @Data class LocalDTO {
     @NotNull
     @Builder.Default
     private Set<ChaveDTO> chaves = new HashSet<>();
+
+    @Schema(description = "Lista de responsaveis do local")
+    @NotNull
+    @Builder.Default
+    private Set<ResponsabilidadeDTO> responsaveis = new HashSet<>();
 }

@@ -49,7 +49,7 @@ public @Data class Responsabilidade extends BaseEntidade<PkResponsabilidade>{
 
     @Transient
     public Boolean getAtivo(){
-        if(Objects.nonNull(this.dataFim)){
+        if(Objects.isNull(this.dataFim)){
             return Boolean.TRUE;
         }else{
             return Boolean.FALSE;

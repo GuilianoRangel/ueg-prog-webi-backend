@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ResponsabilidadeMapper.class})
 public interface LocalMapper extends BaseMapper<Local, LocalDTO>{
     @Override
     //@Mapping(source = "localDTO", target = "chaves.local")
