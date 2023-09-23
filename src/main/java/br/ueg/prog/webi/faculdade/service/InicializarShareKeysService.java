@@ -93,6 +93,7 @@ public class InicializarShareKeysService {
                 .build());
         d.setAnoIngresso("2023");
         d.setCurso("SI");
+        d.setNew();
         d = discenteRepository.saveAndFlush(d);
         System.out.println(d);
 
@@ -222,7 +223,7 @@ public class InicializarShareKeysService {
         f4.getPessoa().setNome("Funcionário 125");
         f4.getPessoa().setTelefone("444");
         f4.setAlocacao("Alocação");
-        f4.setCargo(f.getCargo());
+        f4.setCargo(Cargo.builder().codigo(1L).build());
         //f3.setPessoa(Pessoa.builder().cpf(125L).build());
         f4 = funcionarioService.incluir(f4);
         System.out.println(f4);

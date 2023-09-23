@@ -28,26 +28,6 @@ public class ResponsabilidadeServiceImpl
 
     @Override
     protected void prepararParaIncluir(Responsabilidade resp) {
-        tratarLocal(resp);
-        tratarFuncionario(resp);
-    }
-
-    private void tratarFuncionario(Responsabilidade resp) {
-        if(Objects.nonNull(resp.getFuncionario())){
-           Funcionario funcOpt = funcionarioRepository.getReferenceById(resp.getFuncionario().getId());
-           if(Objects.nonNull(funcOpt)){
-               resp.setFuncionario(funcOpt);
-           }
-        }
-    }
-
-    private void tratarLocal(Responsabilidade resp) {
-       if(Objects.nonNull(resp.getLocal())){
-           Local local = localRepository.getReferenceById(resp.getLocal().getId());
-           if(Objects.nonNull(local)){
-               resp.setLocal(local);
-           }
-       }
     }
 
     @Override
@@ -58,12 +38,5 @@ public class ResponsabilidadeServiceImpl
     @Override
     protected void validarCamposObrigatorios(Responsabilidade entidade) {
 
-    }
-
-    @Override
-    public Responsabilidade alterar(Responsabilidade resp, PkResponsabilidade id) {
-        tratarLocal(resp);
-        tratarFuncionario(resp);
-        return super.alterar(resp, id);
     }
 }

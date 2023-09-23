@@ -34,7 +34,7 @@ public @Data class Funcionario extends BaseEntidade<Long>  implements Persistabl
     @Column(name = "alocacao", nullable = false, length = 40)
     private String alocacao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cargo_codigo",
             referencedColumnName = "codigo",
             nullable = false,
@@ -52,15 +52,5 @@ public @Data class Funcionario extends BaseEntidade<Long>  implements Persistabl
             this.setPessoa(Pessoa.builder().build());
         }
         this.getPessoa().setCpf(cpf);
-    }
-
-    @Transient
-    private boolean isNew = false;
-    public void setNew(){
-        this.isNew = true;
-    }
-    @Override
-    public boolean isNew() {
-        return this.isNew;
     }
 }

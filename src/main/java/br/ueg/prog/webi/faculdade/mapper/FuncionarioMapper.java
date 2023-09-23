@@ -22,7 +22,8 @@ public interface FuncionarioMapper
 
     @Override
     @Mapping(source = "cargo_codigo",   target = "cargo.codigo")
-    @Mapping(source = "cargo_nome",     target = "cargo.nome")
+    // Para nao alterar o nome caso seja enviado um diferente
+    @Mapping(source = "cargo_nome",     target = "cargo.nome", ignore = true)
     @Mapping(source = "nome",           target = "pessoa.nome")
     @Mapping(source = "telefone",       target = "pessoa.telefone")
     @Mapping(source = "email",          target = "pessoa.email")
