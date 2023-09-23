@@ -19,9 +19,6 @@ import java.util.Objects;
 public class FuncionarioServiceImpl  extends BaseCrudService<Funcionario, Long, FuncionarioRepository>
         implements FuncionarioService {
 
-    @Autowired
-    PessoaRepository pessoaRepository;
-
     @Override
     protected void prepararParaIncluir(Funcionario funcionario) {
     }

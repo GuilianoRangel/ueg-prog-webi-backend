@@ -8,6 +8,7 @@ import lombok.*;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Table(name = "TBL_DISCENTE")
 @Entity(name = "Discente")
@@ -18,7 +19,7 @@ import java.io.Serializable;
 public @Data class Discente extends BaseEntidade<Long> {
 
     @Id
-    private long cpf;
+    private Long cpf;
 
     @MapsId
     @OneToOne(optional = false)
@@ -34,4 +35,12 @@ public @Data class Discente extends BaseEntidade<Long> {
 
     @Column(name = "curso", nullable = false, length = 50)
     private String curso;
+
+    public void setCpf(Long cpf) {
+        this.cpf = cpf;
+        if(Objects.isNull(this.getPessoa())){
+            this.setPessoa(Pessoa.builder().build());
+        }
+        this.getPessoa().setCpf(cpf);
+    }
 }
