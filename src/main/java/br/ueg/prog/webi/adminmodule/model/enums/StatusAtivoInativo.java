@@ -8,6 +8,11 @@
  */
 package br.ueg.prog.webi.adminmodule.model.enums;
 
+
+
+import br.ueg.prog.webi.api.interfaces.ISearchFieldData;
+import lombok.Getter;
+
 import java.util.Arrays;
 
 /**
@@ -15,13 +20,15 @@ import java.util.Arrays;
  * 
  * @author UEG
  */
-public enum StatusAtivoInativo {
+@Getter
+public enum StatusAtivoInativo implements ISearchFieldData<String> {
 
-	ATIVO("A", "Ativo"), INATIVO("I", "Inativo");
+	ATIVO("A", "Ativo"),
+	INATIVO("I", "Inativo");
 
 	private final String id;
 
-	private final String descricao;
+	private final String description;
 
 	/**
 	 * Construtor da classe.
@@ -31,21 +38,7 @@ public enum StatusAtivoInativo {
 	 */
 	StatusAtivoInativo(final String id, final String descricao) {
 		this.id = id;
-		this.descricao = descricao;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @return the descricao
-	 */
-	public String getDescricao() {
-		return descricao;
+		this.description = descricao;
 	}
 
 	/**
@@ -55,7 +48,7 @@ public enum StatusAtivoInativo {
 	 * @return -
 	 */
 	public static StatusAtivoInativo getById(final String id) {
-		return Arrays.stream(values()).filter(value -> value.getId().equals(id)).findFirst().orElse(null);
+		return Arrays.stream(values()).filter(value -> value.getId().equals(id)).findFirst().orElse(StatusAtivoInativo.INATIVO);
 	}
 
 	/**

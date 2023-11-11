@@ -1,17 +1,19 @@
 package br.ueg.prog.webi.faculdade.model;
 
 
-import br.ueg.prog.webi.api.model.BaseEntidade;
-import br.ueg.prog.webi.api.model.IEntidade;
 import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
 import br.ueg.prog.webi.adminmodule.model.enums.converter.StatusAtivoInativoConverter;
-import br.ueg.prog.webi.faculdade.model.pks.PkChave;
+import br.ueg.prog.webi.api.interfaces.ISearchFieldData;
+import br.ueg.prog.webi.api.model.BaseEntidade;
+import br.ueg.prog.webi.api.model.annotation.Searchable;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -22,10 +24,11 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name = "TBL_TIPO",
         uniqueConstraints = {
-                @UniqueConstraint(name= Tipo.UK_TIPO_NOME, columnNames = "nome" )
+                @UniqueConstraint(name= Tipo.UK_TIPO_NOME, columnNames = "nome_tipo" )
         }
 )
-public class Tipo extends BaseEntidade<Long> {
+@FieldNameConstants
+public class Tipo extends BaseEntidade<Long> implements ISearchFieldData<Long> {
     public static final String UK_TIPO_NOME = "uk_tipo_nome";
     @SequenceGenerator(
             name="a_gerador_sequence",
@@ -38,15 +41,23 @@ public class Tipo extends BaseEntidade<Long> {
     )
     @Id
     @Column(name = "id")
+    @Searchable(label = "Código")
     private Long id;
 
-    @Column(name = "nome", length = 200, nullable = false)
+    @Column(name = "nome_tipo", length = 200, nullable = false)
+    @Searchable()
     private String nome;
 
     @Column(name = "data_criacao")
+    @Searchable(label = "Dta. Criação")
     private LocalDate dataCriacao;
 
     @Convert(converter = StatusAtivoInativoConverter.class)
     @Column(name = "status_tipo", length = 1)
+    @Searchable()
     private StatusAtivoInativo status;
+
+    public String getDescription(){
+        return this.nome;
+    }
 }

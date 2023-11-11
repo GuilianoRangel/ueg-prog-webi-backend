@@ -6,9 +6,13 @@ import br.ueg.prog.webi.faculdade.model.*;
 import br.ueg.prog.webi.faculdade.model.pks.PkPessoaPermissao;
 import br.ueg.prog.webi.faculdade.model.pks.PkResponsabilidade;
 import br.ueg.prog.webi.faculdade.repository.*;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -81,7 +85,7 @@ public class InicializarShareKeysService {
         System.out.println(f);
 
         Optional<Funcionario> f2 = funcionarioRepository.findByCPF(123L);
-        if(f2.isPresent()) {
+        if (f2.isPresent()) {
             System.out.println(f2.get().toString());
         }
 
@@ -98,7 +102,7 @@ public class InicializarShareKeysService {
         System.out.println(d);
 
         Optional<Discente> d2 = discenteRepository.findByCPF(123L);
-        if(d2.isPresent()) {
+        if (d2.isPresent()) {
             System.out.println("Discente:");
             System.out.println(d2.get().toString());
         }
@@ -124,7 +128,7 @@ public class InicializarShareKeysService {
         System.out.println(ch2.orElseGet(() -> new Chave()));*/
 
         l.getChaves().add(ch);
-        l= localRepository.saveAndFlush(l);
+        l = localRepository.saveAndFlush(l);
 
         Responsabilidade r = new Responsabilidade();
         r.setLocal(l);
@@ -135,7 +139,7 @@ public class InicializarShareKeysService {
         PkResponsabilidade id = r.getId();
         System.out.println(id);
         Optional<Responsabilidade> r2 = responsabilidadeRepository.findById(id);
-        if(r2.isPresent()) {
+        if (r2.isPresent()) {
             System.out.println(r2.get());
         }
 
@@ -149,7 +153,7 @@ public class InicializarShareKeysService {
         PkPessoaPermissao ppid = pp.getId();
 
         Optional<PessoaPermissao> pp2 = pessoaPermissaoRepository.findById(ppid);
-        if(pp2.isPresent()){
+        if (pp2.isPresent()) {
             System.out.println(pp2.get());
             System.out.println(pp2.get().getId());
             String idHash = pp2.get().getIdHash();
@@ -199,6 +203,21 @@ public class InicializarShareKeysService {
         respInc = responsabilidadeService.alterar(resp, respInc.getIdFromHash(pkResp));
         System.out.println(respInc);
 
+        resp = new Responsabilidade();
+        resp.setLocal(
+                Local.builder()
+                        .numeroSala(10L)
+                        .build());
+        resp.setFuncionario(
+                Funcionario.builder()
+                        .cpf(123L)
+                        .build()
+        );
+        resp.setDataInicio(LocalDate.of(2023, 9, 1));
+        resp.setDataFim(LocalDate.of(2023, 9, 25));
+        respInc = responsabilidadeService.incluir(resp);
+        System.out.println(respInc);
+
         // teste do Local salvando com chave.
         //l = localRepository.getReferenceById(10l);
         Optional<Local> byId = localRepository.findById(10L);
@@ -228,11 +247,27 @@ public class InicializarShareKeysService {
         f4 = funcionarioService.incluir(f4);
         System.out.println(f4);
 
-       f4.setAlocacao("OutraTeste");
+        f4.setAlocacao("OutraTeste");
         //f3.setPessoa(Pessoa.builder().cpf(125L).build());
         f4 = funcionarioService.incluir(f4);
         System.out.println(f4);
 
+        List<Funcionario> teste = funcionarioRepository.findAll(userRoleId("da"));
+        System.out.println(teste);
+
+
     }
 
+    public static Specification<Funcionario> userRoleId(String name) {
+        return (root, query, builder) -> {
+            Subquery<Pessoa> subquery = query.subquery(Pessoa.class);
+            Root<Pessoa> subqueryRoot = subquery.from(Pessoa.class);
+            subquery.select(subqueryRoot);
+            Predicate userIdPredicate = builder.equal(subqueryRoot.get(Pessoa.Fields.cpf), root.<String> get(Funcionario.Fields.cpf));
+
+            Predicate roleIdList = builder.like(subqueryRoot.get(Pessoa.Fields.nome), "%" + name + "%");
+            subquery.select(subqueryRoot).where(userIdPredicate, roleIdList);
+            return builder.exists(subquery);
+        };
+    }
 }

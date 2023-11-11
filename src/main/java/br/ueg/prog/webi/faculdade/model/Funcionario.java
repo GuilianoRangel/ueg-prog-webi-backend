@@ -1,22 +1,20 @@
 package br.ueg.prog.webi.faculdade.model;
 
 import br.ueg.prog.webi.api.model.BaseEntidade;
-import br.ueg.prog.webi.api.model.IEntidade;
-import br.ueg.prog.webi.faculdade.model.pks.PkFuncionario;
-import lombok.*;
-
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldNameConstants;
 import org.springframework.data.domain.Persistable;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-@Table(name = "TBL_FUNCIONARIO")
+@Table(name = "TBL_FUNCIONARIO", indexes = {@Index(name = "IDX_PK_FUNCIONARIO", columnList = "cpf", unique = true)})
 @Entity(name = "Funcionario")
 @ToString()
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldNameConstants
 public @Data class Funcionario extends BaseEntidade<Long>  implements Persistable<Long> {
 
     @Id

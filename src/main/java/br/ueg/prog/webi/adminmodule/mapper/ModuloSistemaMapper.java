@@ -16,22 +16,22 @@ public interface ModuloSistemaMapper {
     /**
      * Converte a entidade {@link ModuloSistema} em DTO {@link ModuloSistemaDTO}
      *
-     * @param moduloSistema
-     * @return
+     * @param moduloSistema -
+     * @return -
      */
 
     @Mapping(source = "status.id", target = "idStatus")
-    @Mapping(source = "status.descricao", target = "descricaoStatus")
-    public ModuloSistemaDTO toDTO(ModuloSistema moduloSistema);
+    @Mapping(source = "status.description", target = "descricaoStatus")
+    ModuloSistemaDTO toDTO(ModuloSistema moduloSistema);
 
     /**
      * Converte o DTO {@link ModuloSistemaDTO} para entidade {@link ModuloSistema}
      *
-     * @param moduloSistemaDTO
-     * @return
+     * @param moduloSistemaDTO -
+     * @return -
      */
 
     @Mapping(target = "status", expression = "java( StatusAtivoInativo.getById( moduloSistemaDTO.getIdStatus() ) )")
 
-    public ModuloSistema toEntity(ModuloSistemaDTO moduloSistemaDTO);
+    ModuloSistema toEntity(ModuloSistemaDTO moduloSistemaDTO);
 }
