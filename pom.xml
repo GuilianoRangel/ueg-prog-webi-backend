@@ -92,7 +92,7 @@
 		</dependency>
 		<dependency>
 			<groupId>br.ueg.prog.webi</groupId>
-			<artifactId>aquitetura</artifactId>
+			<artifactId>arquitetura</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
@@ -127,7 +127,7 @@
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 
-		<!-- ADD 02/09/2023 - para utilizar de ObjectMapper -->
+        <!-- ADD 02/09/2023 - para utilizar de ObjectMapper -->
 		<!--<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
