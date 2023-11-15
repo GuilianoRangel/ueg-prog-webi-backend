@@ -1,6 +1,8 @@
 package br.ueg.prog.webi.faculdade.model;
 
+import br.ueg.prog.webi.api.interfaces.ISearchFieldData;
 import br.ueg.prog.webi.api.model.BaseEntidade;
+import br.ueg.prog.webi.api.model.annotation.Searchable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
@@ -15,9 +17,10 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldNameConstants
-public @Data class Funcionario extends BaseEntidade<Long>  implements Persistable<Long> {
+public @Data class Funcionario extends BaseEntidade<Long>  implements Persistable<Long>, ISearchFieldData<Long> {
 
     @Id
+    @Searchable(label = "CPF")
     private Long cpf;
 
     @MapsId
@@ -27,6 +30,7 @@ public @Data class Funcionario extends BaseEntidade<Long>  implements Persistabl
             nullable = false,
             foreignKey = @ForeignKey(name = "fk_funcionario_pessoa")
     )
+    @Searchable
     private Pessoa pessoa;
 
     @Column(name = "alocacao", nullable = false, length = 40)
@@ -50,5 +54,10 @@ public @Data class Funcionario extends BaseEntidade<Long>  implements Persistabl
             this.setPessoa(Pessoa.builder().build());
         }
         this.getPessoa().setCpf(cpf);
+    }
+
+    @Override
+    public String getDescription() {
+        return this.getPessoa().getNome();
     }
 }

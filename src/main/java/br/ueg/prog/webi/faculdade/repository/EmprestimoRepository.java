@@ -1,10 +1,9 @@
 package br.ueg.prog.webi.faculdade.repository;
 
 import br.ueg.prog.webi.faculdade.model.Emprestimo;
-import br.ueg.prog.webi.faculdade.model.PessoaPermissao;
 import br.ueg.prog.webi.faculdade.model.pks.PkEmprestimo;
-import br.ueg.prog.webi.faculdade.model.pks.PkPessoaPermissao;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface EmprestimoRepository
-        extends JpaRepository<Emprestimo, PkEmprestimo>{
+        extends JpaRepository<Emprestimo, PkEmprestimo>, JpaSpecificationExecutor<Emprestimo> {
     @Query("select e " +
             "From Emprestimo e " +
             "inner join fetch e.pessoaPermissao pp " +
@@ -27,8 +26,7 @@ public interface EmprestimoRepository
             " and e.chave.local = :#{#pk.chave.local} " +
             " and pp.sequencia = :#{#pk.pessoaPermissao.sequencia} " +
             //" and r.local.numeroSala = :#{#pk.pessoaPermissa.responsabilidade.local} " +
-            " and r.sequencia = :#{#pk.pessoaPermissa.responsabilidade.sequencia} " +
-            "")
+            " and r.sequencia = :#{#pk.pessoaPermissao.responsabilidade.sequencia} ")
     Optional<Emprestimo> findById(PkEmprestimo pk);
 
     Optional<List<Emprestimo>> findByChave_NumeroAndChave_Local_Id(Long chaveNumero, Long chaveLocalId);

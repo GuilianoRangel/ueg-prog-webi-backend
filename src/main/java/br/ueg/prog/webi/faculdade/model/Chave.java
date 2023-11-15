@@ -2,6 +2,7 @@ package br.ueg.prog.webi.faculdade.model;
 
 
 import br.ueg.prog.webi.api.model.BaseEntidade;
+import br.ueg.prog.webi.api.model.annotation.Searchable;
 import br.ueg.prog.webi.faculdade.model.pks.PkChave;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,9 +27,11 @@ public @Data class Chave extends BaseEntidade<PkChave> {
 
     @Id
     @Column(name = "numero", nullable = false)
+    @Searchable(label = "Número")
     private Long numero;
 
     @Column(name = "qr_code", length = 500)
+    @Searchable(label = "QR Code")
     private String qrCode;
 
     @Override

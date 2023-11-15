@@ -58,6 +58,6 @@ public class Tipo extends BaseEntidade<Long> implements ISearchFieldData<Long> {
     private StatusAtivoInativo status;
 
     public String getDescription(){
-        return this.nome;
+        return this.nome + " - " + this.status;
     }
 }

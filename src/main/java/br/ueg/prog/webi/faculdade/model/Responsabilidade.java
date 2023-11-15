@@ -1,22 +1,20 @@
 package br.ueg.prog.webi.faculdade.model;
 
+import br.ueg.prog.webi.api.interfaces.ISearchFieldData;
 import br.ueg.prog.webi.api.model.BaseEntidade;
-import br.ueg.prog.webi.api.model.IEntidade;
-import br.ueg.prog.webi.api.util.Reflexao;
+import br.ueg.prog.webi.api.model.annotation.Searchable;
 import br.ueg.prog.webi.faculdade.model.pks.PkResponsabilidade;
-import lombok.Data;
-
 import jakarta.persistence.*;
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
+import lombok.Data;
+import lombok.ToString;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Table(name = "TBL_RESPONSABILIDADE")
 @Entity
 @IdClass(PkResponsabilidade.class)
-public @Data class Responsabilidade extends BaseEntidade<PkResponsabilidade>{
+public @Data class Responsabilidade extends BaseEntidade<PkResponsabilidade> implements ISearchFieldData<PkResponsabilidade> {
 
     @Id
     @SequenceGenerator(
@@ -35,10 +33,12 @@ public @Data class Responsabilidade extends BaseEntidade<PkResponsabilidade>{
     @Id
     @ManyToOne
     @JoinColumn(name = "local_numero_sala", referencedColumnName = "numero_sala", nullable = false, foreignKey = @ForeignKey(name = "fk_responsabilidade_local"))
+    @ToString.Exclude
     private Local local;
 
     @ManyToOne
     @JoinColumn(name = "funcionario_pessoa_cpf", referencedColumnName = "cpf", nullable = false, foreignKey = @ForeignKey(name = "fk_responsabilidade_funcionario"))
+    @Searchable(label = "Funcionário", listEntityValues = true)
     private Funcionario funcionario;
 
     @Column(name = "data_inicio", nullable = false)
@@ -54,6 +54,11 @@ public @Data class Responsabilidade extends BaseEntidade<PkResponsabilidade>{
         }else{
             return Boolean.FALSE;
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return this.getFuncionario().getPessoa().getNome();
     }
 }
 

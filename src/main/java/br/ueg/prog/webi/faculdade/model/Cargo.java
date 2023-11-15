@@ -1,16 +1,10 @@
 package br.ueg.prog.webi.faculdade.model;
 
 
-import br.ueg.prog.webi.adminmodule.model.enums.StatusAtivoInativo;
-import br.ueg.prog.webi.adminmodule.model.enums.converter.StatusAtivoInativoConverter;
+import br.ueg.prog.webi.api.interfaces.ISearchFieldData;
 import br.ueg.prog.webi.api.model.BaseEntidade;
-import br.ueg.prog.webi.api.model.IEntidade;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.Hibernate;
-
-import java.time.LocalDate;
-import java.util.Objects;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -26,7 +20,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
                 @UniqueConstraint(name= Cargo.UK_CARGO_NOME, columnNames = "nome" )
         }
 )
-public class Cargo extends BaseEntidade<Long> {
+public class Cargo extends BaseEntidade<Long> implements ISearchFieldData<Long> {
     public static final String UK_CARGO_NOME = "uk_cargo_nome";
     @SequenceGenerator(
             name="a_gerador_sequence",
@@ -43,4 +37,9 @@ public class Cargo extends BaseEntidade<Long> {
 
     @Column(name = "nome", length = 100, nullable = false)
     private String nome;
+
+    @Override
+    public String getDescription() {
+        return this.getNome();
+    }
 }

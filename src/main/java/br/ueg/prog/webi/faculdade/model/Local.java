@@ -1,11 +1,9 @@
 package br.ueg.prog.webi.faculdade.model;
 
 import br.ueg.prog.webi.api.model.BaseEntidade;
+import br.ueg.prog.webi.api.model.annotation.Searchable;
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.commons.lang3.builder.HashCodeExclude;
-import org.apache.commons.lang3.builder.ToStringExclude;
-import org.hibernate.Hibernate;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,21 +20,26 @@ public @Getter
 class Local extends BaseEntidade<Long> {
     @Id
     @Column(name = "numero_sala")
+    @Searchable(label = "Número")
     private Long numeroSala;
 
     @Column(name = "nome", nullable = false,	length = 20)
+    @Searchable
     private String nome;
 
     @Column(name = "descricao",	length = 100)
+    @Searchable(label = "Descrição")
     private String descricao;
 
     //TODO mostrar mapeamento bidirecional
     @OneToMany(mappedBy = "local", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
+    @Searchable(label = "Chaves")
     private Set<Chave> chaves = new HashSet<>();
 
     @OneToMany(mappedBy = "local", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
+    @Searchable(label = "Responsáveis")
     private Set<Responsabilidade> responsaveis = new HashSet<>();
 
     @Override

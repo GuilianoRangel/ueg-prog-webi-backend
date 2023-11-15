@@ -2,6 +2,7 @@ package br.ueg.prog.webi.faculdade.repository;
 
 import br.ueg.prog.webi.faculdade.model.Discente;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface DiscenteRepository
-        extends JpaRepository<Discente, Long>{
+        extends JpaRepository<Discente, Long>, JpaSpecificationExecutor<Discente> {
     @Query("select d " +
             "From Discente d " +
             "inner join fetch d.pessoa " +

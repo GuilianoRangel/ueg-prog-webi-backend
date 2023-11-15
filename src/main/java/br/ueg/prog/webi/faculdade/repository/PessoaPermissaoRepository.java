@@ -1,10 +1,9 @@
 package br.ueg.prog.webi.faculdade.repository;
 
 import br.ueg.prog.webi.faculdade.model.PessoaPermissao;
-import br.ueg.prog.webi.faculdade.model.Responsabilidade;
 import br.ueg.prog.webi.faculdade.model.pks.PkPessoaPermissao;
-import br.ueg.prog.webi.faculdade.model.pks.PkResponsabilidade;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface PessoaPermissaoRepository
-        extends JpaRepository<PessoaPermissao, PkPessoaPermissao>{
+        extends JpaRepository<PessoaPermissao, PkPessoaPermissao>, JpaSpecificationExecutor<PessoaPermissao> {
     @Query("select pp " +
             "From PessoaPermissao pp " +
             "inner join fetch pp.responsabilidade  r "+
