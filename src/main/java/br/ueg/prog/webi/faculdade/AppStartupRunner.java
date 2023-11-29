@@ -32,6 +32,9 @@ public class AppStartupRunner implements ApplicationRunner {
     @Autowired
     private TipoRepository tipoRepository;
 
+    @Autowired
+    private AmigoRepository amigoRepository;
+
 
     @Autowired
     private InicializarService inicializarService;
@@ -52,6 +55,38 @@ public class AppStartupRunner implements ApplicationRunner {
         t1.setDataCriacao(LocalDate.now());
         t1.setStatus(StatusAtivoInativo.INATIVO);
         tipoRepository.save(t1);
+
+        t1 = new Tipo();
+        t1.setNome("Amigo");
+        t1.setDataCriacao(LocalDate.now());
+        t1.setStatus(StatusAtivoInativo.ATIVO);
+        tipoRepository.save(t1);
+
+        t1 = new Tipo();
+        t1.setNome("Pilantra");
+        t1.setDataCriacao(LocalDate.now());
+        t1.setStatus(StatusAtivoInativo.ATIVO);
+        tipoRepository.save(t1);
+
+        t1 = new Tipo();
+        t1.setNome("Amissíssimo");
+        t1.setDataCriacao(LocalDate.now());
+        t1.setStatus(StatusAtivoInativo.ATIVO);
+        tipoRepository.save(t1);
+
+        t1 = new Tipo();
+        t1.setNome("Conhecido");
+        t1.setDataCriacao(LocalDate.now());
+        t1.setStatus(StatusAtivoInativo.ATIVO);
+        t1 = tipoRepository.save(t1);
+
+        Amigo a2 ;
+        for(int x=0; x < 10; x++){
+            a2 = new Amigo();
+            a2.setTipo(t1);
+            a2.setNome("Amigo "+x);
+            amigoRepository.save(a2);
+        }
     }
 
     @Override

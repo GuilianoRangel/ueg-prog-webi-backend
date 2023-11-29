@@ -45,7 +45,7 @@ public class Tipo extends BaseEntidade<Long> implements ISearchFieldData<Long> {
     private Long id;
 
     @Column(name = "nome_tipo", length = 200, nullable = false)
-    @Searchable()
+    @Searchable(autoComplete = true)
     private String nome;
 
     @Column(name = "data_criacao")
